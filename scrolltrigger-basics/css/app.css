@@ -29,7 +29,13 @@ h1 {
     text-align: center;
     padding: 200px 0;
     border-bottom: 1px #ebebeb solid;
+    transition: background .6s ease;
 }
+
+.project.active {
+  background: #c6c6c6;
+}
+
 .project img {
     width: 180px;
     height: 180px;
