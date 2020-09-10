@@ -44,7 +44,7 @@ const runComplete = () => {
 }
 
 let tl = gsap.timeline({
-  paused: true,
+  paused: false,
   onStart: runStart,
   onUpdate: runUpdate,
   onComplete: runComplete
