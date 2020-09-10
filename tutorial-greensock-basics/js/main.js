@@ -33,34 +33,103 @@
 //   { y: 40 }
 // )
 
-// Exercize:
+const runStart = () => {
+  console.log('started!');
+}
+const runUpdate = () => {
+  console.log('updated!');
+}
+const runComplete = () => {
+  console.log('completed!');
+}
+
 let tl = gsap.timeline({
-  duration: .4,
-  ease: 'power1.out',
+  paused: true,
+  onStart: runStart,
+  onUpdate: runUpdate,
+  onComplete: runComplete
 })
 
-tl.fromTo( 'body', 
-  { backgroundColor: '#fff' },
-  {
-    duration: .8,
-    backgroundColor: '#76c897',
-    ease: 'linear',
-  }
-).from( ['h1', 'p'],
-  { 
-    opacity: 0, 
-    y: -20,
-    stagger: .4,
-  }
-).from( 'img, h2',
-  { 
-    opacity: 0 
-  }
-).from( 'ul li',
+tl
+  .from( 'body', 
+    {
+      duration: 1.7,
+      backgroundColor: '#fff',
+      ease: 'linear',
+    }
+  )
+  .from( ['h1', 'p'],
+    { 
+      opacity: 0, 
+      duration: .6,
+      y: -20,
+      ease: 'none',
+      stagger: .2,
+    },
+    '-=1'
+  )
+  .from( 'img, h2',
+    { 
+      opacity: 0 
+    }
+  )
+  .from( 'ul li',
   {
     zIndex: -1,
     opacity: 0,
     y: -20,
     stagger: .2,
   }
-)
+); 
+
+const playButton = document.querySelector('#btnPlay');
+const pauseButton = document.querySelector('#btnPause');
+const resumeButton = document.querySelector('#btnResume');
+const reverseButton = document.querySelector('#btnReverse');
+const speedUpButton = document.querySelector('#btnSpeedUp');
+const slowDownButton = document.querySelector('#btnSlowDown');
+const seekButton = document.querySelector('#btnSeek');
+const progressButton = document.querySelector('#btnProgress');
+const restartButton = document.querySelector('#btnRestart');
+const killButton = document.querySelector('#btnKill');
+
+playButton.addEventListener('click', () => {
+  tl.play();
+});
+
+pauseButton.addEventListener('click', () => {
+  tl.pause();
+});
+
+resumeButton.addEventListener('click', () => {
+  tl.resume();
+});
+
+reverseButton.addEventListener('click', () => {
+  tl.reverse();
+});
+
+speedUpButton.addEventListener('click', () => {
+  tl.timeScale(2);
+});
+
+slowDownButton.addEventListener('click', () => {
+  tl.timeScale(.5);
+});
+
+console.log(tl.duration());
+seekButton.addEventListener('click', () => {
+  tl.seek(1);
+});
+
+progressButton.addEventListener('click', () => {
+  tl.progress(.5);
+});
+
+restartButton.addEventListener('click', () => {
+  tl.restart();
+});
+
+killButton.addEventListener('click', () => {
+  tl.kill();
+});
