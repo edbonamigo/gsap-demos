@@ -78,7 +78,15 @@ function init() {
         trigger: project.querySelector('img'),
         start: 'top bottom-=300',
         end: 'top center',
-        toggleActions: 'play none none reverse',
+        // toggleActions: 'play none none reverse',
+        scrub: true,
+        // onUpdate: ({progress, direction, isActive, getVelocity}) => {
+        //   console.log( progress.toFixed(2), direction, isActive, getVelocity().toFixed(2) )
+        // },
+        onEnter: () => console.log('Enter'),
+        onLeave: () => console.log('Leave'),
+        onEnterBack: () => console.log('Enter Back'),
+        onLeaveBack: () => console.log('Leave Back'),
         markers: true,
       },
     });
