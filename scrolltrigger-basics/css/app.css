@@ -25,6 +25,12 @@ h1 {
     font-size: 20px;
     color: #262626;
 }
+
+#intro img {
+  width: 200px;
+  height: 200px;
+}
+
 .project {
     text-align: center;
     padding: 200px 0;
