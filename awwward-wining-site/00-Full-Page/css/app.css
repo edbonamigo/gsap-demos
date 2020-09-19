@@ -1,9 +1,15 @@
+
+@font-face{
+  font-family: 'WorkSans-Regular';
+  src: url(../font/WorkSans-Regular.ttf);
+}
+
 :root {
   --text-color: white;
   --text-dark-color: #202020;
   --header-height: 100px;
   --burger-width: 40px;
-  --font-headings: Georgia, serif;
+  --font-headings: 'WorkSans-Regular', serif;
 
   --bcg-green: #ACB7AE;
   --bcg-lightgreen: #a6b3b3;
@@ -20,11 +26,6 @@
   --h-gutter: 6.6vw;  
 
   --easing: cubic-bezier(0.5, 0.7, 0.4, 1);
-}
-
-@font-face{
-  font-family: 'WorkSans-Regular';
-  src: url(../font/WorkSans-Regular.ttf);
 }
 
 body {
