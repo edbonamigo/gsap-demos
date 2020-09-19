@@ -22,8 +22,13 @@
   --easing: cubic-bezier(0.5, 0.7, 0.4, 1);
 }
 
+@font-face{
+  font-family: 'WorkSans-Regular';
+  src: url(../font/WorkSans-Regular.ttf);
+}
+
 body {
-  font: 16px/1.7 'Source Sans Pro', Helvetica, Helvetica Neue, Arial, sans-serif;
+  font: 16px/1.7 'WorkSans-Regular', Helvetica, Helvetica Neue, Arial, sans-serif;
   color: var(--text-dark-color);
 }
 
