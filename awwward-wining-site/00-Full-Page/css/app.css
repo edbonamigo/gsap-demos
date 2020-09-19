@@ -32,8 +32,8 @@
   --v-spacing: 10vh;
   --h-gutter: 6.6vw;  
 
-  --easing: ease;
-  /* --easing: cubic-bezier(0.5, 0.7, 0.4, 1); */
+  /* --easing: ease; */
+  --easing: cubic-bezier(0.5, 0.7, 0.4, 1);
 }
 
 body {
@@ -169,7 +169,8 @@ header {
   align-items: center;
   position: relative;
   flex-direction: column;
-  perspective: 1000px;
+  perspective: 2000px;
+  perspective-origin: center;
   z-index: 2;
 }
 header h1 {
@@ -195,17 +196,19 @@ header h1 span {
   pointer-events: none;
 }
 .decor__circle {
-  border: 1px white solid;
+  border: 2px white solid;
   border-radius: 100%;
   width: 23vw;
   height: 23vw;
   position: absolute;
   top: 45vh;
   left: 27vw;
-  opacity: 0.4;
+  opacity: 0.3;
   pointer-events: none;
+  z-index: 1;
 }
 .cta__circle {
+  pointer-events: none;
   width: 7.7vw;
   height: 7.7vw;
   position: absolute;
