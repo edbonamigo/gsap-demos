@@ -35,7 +35,6 @@ function initNavigation() {
     onLeaveBack: ({direction}) => navAnimation(direction)
   });
 }
-
 function initHeaderTilt() {
   document.querySelector('header').addEventListener('mousemove', moveImages);
 }
@@ -90,7 +89,6 @@ function moveImages(e) {
   });
 
 }
-
 function initHideOnScroll() {
 
   const elements = gsap.utils.toArray('.js-hide-on-scroll');
@@ -114,13 +112,45 @@ function initHideOnScroll() {
 }
 
 
+function initColumnAnimation() {
+  const columns  = document.querySelectorAll('.rg__column');
+  columns.forEach( (column) => {
+    let imageContainer  = column.querySelector('.rg__image'),
+      imageMask         = column.querySelector('.rg__image--mask');
+
+    gsap.set(imageContainer, {yPercent: -101})
+    gsap.set(imageMask, {yPercent: 100, scale: 1.3})
+
+    column.tl = gsap.timeline({
+      paused: true,
+      ease: 'Power4.out'
+    });
+
+    column.tl
+      .to(imageContainer, {yPercent: 0}, 'first')
+      .to(imageMask, {yPercent: 0, scale: 1}, 'first')
+
+    column.addEventListener('mouseenter', setActionRevealAnimation);
+    column.addEventListener('mouseleave', setActionRevealAnimation);
+  });
+}
+
+function setActionRevealAnimation(e) {
+  let tl = e.target.tl;
+  if (e.type == 'mouseenter') {
+    tl.play();
+  } else if (e.type == 'mouseleave') {
+    tl.reverse();
+  }
+}
+
 
 function init(){
   const mediaQuery = window.matchMedia('(min-width: 1100px)');
     
   initNavigation();
   initHideOnScroll();
-
+  initColumnAnimation();
   if(mediaQuery.matches) {
     initHeaderTilt();
   }
