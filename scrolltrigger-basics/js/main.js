@@ -77,7 +77,7 @@ function init() {
       scrollTrigger: {
         trigger: project.querySelector('img'),
         start: 'top bottom-=300',
-        end: 'top center',
+        end: 'top center-=100',
         // toggleActions: 'play none none reverse',
         scrub: true,
         // onUpdate: ({progress, direction, isActive, getVelocity}) => {

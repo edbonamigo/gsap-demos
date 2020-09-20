@@ -379,14 +379,10 @@ header h1 span {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  /* transform: translateY(-100%);
-  transition: transform 0.45s var(--easing); */
 }
 .rg__image--mask {
   height: 100%;
   overflow: hidden;
-  /* transition: transform 0.45s var(--easing);
-  transform: translateY(100%); */
 }
 .rg__image img {
   opacity: 0.6;
@@ -490,6 +486,7 @@ section {
   padding-bottom: var(--v-spacing);
 }
 .chapter {
+  font-family: var(--font-heavy);
   position: absolute;
   left: var(--h-gutter);
   top: var(--v-spacing);
@@ -660,6 +657,11 @@ section {
   position: relative;
   z-index: 2; /* fix for Safari */
 }
+
+.stage__heading h3 {
+  font-family: var(--font-heavy);
+}
+
 .stage__heading h3,
 .stage__heading p {
   position: absolute;

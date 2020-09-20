@@ -37,11 +37,8 @@ function initNavigation() {
 }
 
 function initHeaderTilt() {
-
   document.querySelector('header').addEventListener('mousemove', moveImages);
-
 }
-
 function moveImages(e) {
   
   // Mouse position
@@ -94,10 +91,36 @@ function moveImages(e) {
 
 }
 
+function initHideOnScroll() {
+
+  const elements = gsap.utils.toArray('.js-hide-on-scroll');
+  // const element = document.querySelector('.js-hide-on-scroll');
+
+  elements.forEach( element => {
+    gsap.to(element, {
+      skewY: '5deg',
+      translateY: '-40px',
+      autoAlpha: 0,
+      ease: 'Power4.out',
+      scrollTrigger: {
+        trigger: element,
+        start: 'top top+=100',
+        end: 'bottom top+=100',
+        scrub: true,
+        // markers: true
+      }
+    });
+  });
+}
+
+
+
 function init(){
   const mediaQuery = window.matchMedia('(min-width: 1100px)');
     
   initNavigation();
+  initHideOnScroll();
+
   if(mediaQuery.matches) {
     initHeaderTilt();
   }
