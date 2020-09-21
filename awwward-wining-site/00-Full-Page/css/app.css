@@ -363,7 +363,7 @@ header h1 span {
 /* .rg__column.left {background-color:var(--bcg-lightgreen)}
 .rg__column.center {background-color: var(--bcg-lightbrown)}
 .rg__column.right {background-color:var(--bcg-lightblue)} */
-.rg__column::before {
+/* .rg__column::before {
   display: block;
   position: absolute;
   top: 50%;
@@ -374,7 +374,7 @@ header h1 span {
   transform: translateY(-50%);
   background-color: var(--text-color);
   opacity: 0.4
-}
+} */
 .rg__image {
   width: 100%;
   height: 100%;

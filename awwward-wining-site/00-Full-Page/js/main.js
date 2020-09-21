@@ -20,7 +20,7 @@ function initNavigation() {
       stagger: 0.05,
       autoAlpha: () => scrollDown ? 0 : 1,
       y: () => scrollDown ? 20 : 0,
-      ease: 'Power4.out',
+      ease: 'power1.out',
     });
   }
 
@@ -85,7 +85,7 @@ function moveImages(e) {
     duration: 1,
     x: xPos*3,
     y: yPos*2,
-    ease: 'Power4.out'
+    ease: 'power1.out'
   });
 
 }
@@ -99,7 +99,7 @@ function initHideOnScroll() {
       skewY: '5deg',
       translateY: '-40px',
       autoAlpha: 0,
-      ease: 'Power4.out',
+      ease: 'power1.out',
       scrollTrigger: {
         trigger: element,
         start: 'top top+=100',
@@ -115,27 +115,54 @@ function initHideOnScroll() {
 function initColumnAnimation() {
   const columns  = document.querySelectorAll('.rg__column');
   columns.forEach( (column) => {
-    let imageContainer  = column.querySelector('.rg__image'),
-      imageMask         = column.querySelector('.rg__image--mask');
+    column.imgBlock   = column.querySelector('.rg__image'),
+    column.imgMask    = column.querySelector('.rg__image--mask');
+    column.textBlock  = column.querySelector('.rg__text');
+    column.textMask   = column.querySelector('.rg__text--mask');
+    column.text       = column.querySelector('.rg__text--copy');
 
-    gsap.set(imageContainer, {yPercent: -101})
-    gsap.set(imageMask, {yPercent: 100, scale: 1.3})
+    gsap.set(column.imgBlock, {yPercent: -101});
+    gsap.set(column.imgMask, {yPercent: 100, scale: 1.3});
+    gsap.set(column.text, {yPercent: -100});
+    gsap.set(column.textMask, {yPercent: 101});
 
-    column.tl = gsap.timeline({
-      paused: true,
-      ease: 'Power4.out'
-    });
+    createColumnAnimation(column);
 
-    column.tl
-      .to(imageContainer, {yPercent: 0}, 'first')
-      .to(imageMask, {yPercent: 0, scale: 1}, 'first')
-
-    column.addEventListener('mouseenter', setActionRevealAnimation);
-    column.addEventListener('mouseleave', setActionRevealAnimation);
+    column.addEventListener('mouseenter', setActionColumnAnimation);
+    column.addEventListener('mouseleave', setActionColumnAnimation);
   });
 }
 
-function setActionRevealAnimation(e) {
+function createColumnAnimation(column) {
+  const { tl, imgBlock, imgMask, textBlock, text, textMask } = column;
+  column.tl = gsap.timeline({
+    paused: true,
+  });
+
+  column.tl
+    .to( imgBlock, {
+        duration: .8, yPercent: 0, ease: 'power1.out'
+      }, 'first'
+    )
+    .to( imgMask, {
+        duration: .8, yPercent: 0, scale: 1, ease: 'power1.out'
+      }, 'first'
+    )
+    .to( textBlock, {
+        duration: .6, y: () => -getElementHeight(text)/2, ease: 'power1.out'
+      }, 'first'
+    )
+    .to( [textMask, text], {
+        duration: .6, yPercent: 0, ease: 'linear'
+      }, 'first'
+    )
+}
+
+function getElementHeight(element) {
+  return element.clientHeight;
+}
+
+function setActionColumnAnimation(e) {
   let tl = e.target.tl;
   if (e.type == 'mouseenter') {
     tl.play();
