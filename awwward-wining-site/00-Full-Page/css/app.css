@@ -518,29 +518,22 @@ section {
   margin: auto;
   letter-spacing: 0.2vw;
   line-height: 1.5;
+  transition: opacity .5s ease-out;
 }
 .portfolio__categories a:hover {
   z-index: 1;
 }
-.portfolio__image--l,
-.portfolio__image--s  {
+.portfolio__image {
   pointer-events: none; /* important to be able to hover over links under the image */
   position: absolute;
   width: 28vw;
   top: 11vh;
-  left: 24vw;
-  overflow: hidden;
+  left: 50vw;
   background-color: #000;
   visibility: hidden;
 }
-.portfolio__image--l {
+.portfolio__image {
   padding-bottom: 41.66vw;
-}
-.portfolio__image--s {
-  width: 15vw;
-  top: 25vh;
-  left: 54vw;
-  padding-bottom: 20vw;
 }
 .image_inside {
   position: absolute;

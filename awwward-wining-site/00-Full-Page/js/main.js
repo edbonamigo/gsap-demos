@@ -14,12 +14,14 @@ function initNavigation() {
 
   function navAnimation(direction) {
     const scrollDown = direction === 1;
+    const pointerEvent = scrollDown ? 'none' : 'auto';
     const links = scrollDown ? mainNavLinks : mainNavLinksReversed;
     return gsap.to( links, {
       duration: 0.3,
       stagger: 0.05,
       autoAlpha: () => scrollDown ? 0 : 1,
       y: () => scrollDown ? 20 : 0,
+      onComplete: () => links.forEach (link => link.parentNode.parentNode.parentNode.style.pointerEvents = pointerEvent),
       ease: 'power1.out',
     });
   }
@@ -35,6 +37,7 @@ function initNavigation() {
     onLeaveBack: ({direction}) => navAnimation(direction)
   });
 }
+
 function initHeaderTilt() {
   document.querySelector('header').addEventListener('mousemove', moveImages);
 }
@@ -89,6 +92,7 @@ function moveImages(e) {
   });
 
 }
+
 function initHideOnScroll() {
 
   const elements = gsap.utils.toArray('.js-hide-on-scroll');
@@ -111,7 +115,6 @@ function initHideOnScroll() {
   });
 }
 
-
 function initColumnAnimation() {
   const columns  = document.querySelectorAll('.rg__column');
   columns.forEach( (column) => {
@@ -132,36 +135,23 @@ function initColumnAnimation() {
     column.addEventListener('mouseleave', setActionColumnAnimation);
   });
 }
-
 function createColumnAnimation(column) {
   const { tl, imgBlock, imgMask, textBlock, text, textMask } = column;
   column.tl = gsap.timeline({
     paused: true,
+    duration: 0.1,
+    ease: 'power1.out'
   });
 
   column.tl
-    .to( imgBlock, {
-        duration: .8, yPercent: 0, ease: 'power1.out'
-      }, 'first'
-    )
-    .to( imgMask, {
-        duration: .8, yPercent: 0, scale: 1, ease: 'power1.out'
-      }, 'first'
-    )
-    .to( textBlock, {
-        duration: .6, y: () => -getElementHeight(text)/2, ease: 'power1.out'
-      }, 'first'
-    )
-    .to( [textMask, text], {
-        duration: .6, yPercent: 0, ease: 'linear'
-      }, 'first'
-    )
+    .to( imgBlock, {yPercent: 0}, 0)
+    .to( imgMask, {yPercent: 0, scale: 1}, 0)
+    .to( textBlock, {y: () => -getElementHeight(text)/2}, 0)
+    .to( [textMask, text], {yPercent: 0}, 0);
 }
-
 function getElementHeight(element) {
   return element.clientHeight;
 }
-
 function setActionColumnAnimation(e) {
   let tl = e.target.tl;
   if (e.type == 'mouseenter') {
@@ -171,6 +161,73 @@ function setActionColumnAnimation(e) {
   }
 }
 
+const portfolioImage = document.querySelector('.image_inside');
+const fillBackground = document.querySelector('.fill-background');
+const allLinks = document.querySelectorAll('.portfolio__categories a');
+
+function initPortfolio() {
+  allLinks.forEach(link => {
+    link.addEventListener('mouseenter', createPortfolioAnimation);
+    link.addEventListener('mouseleave', createPortfolioAnimation);
+    
+  });
+  let yPos
+  let portfolioHeight = document.querySelector('.portfolio__categories').clientHeight;
+  document.querySelector('.portfolio__categories').addEventListener('mousemove', function(e) {
+    yPos = (e.clientY - portfolioHeight)/4 + 30;
+    gsap.to(portfolioImage, {
+      duration: .6,
+      y: yPos
+    })
+  });
+}
+
+function createPortfolioAnimation(e) {
+  let { color, img } = e.target.dataset;
+  if (e.type == 'mouseenter') {
+    
+    allLinks.forEach( link => {
+      link.style.color = '#FFF'; 
+      link !== e.target ? link.style.opacity = '0.3' : link.style.opacity = '1';
+    });
+    
+    portfolioImage.style.backgroundImage = `url(${img})`;
+
+    gsap.to(portfolioImage, {
+      duration: .6,
+      visibility: 'visible',
+      autoAlpha: 1,
+      ease: 'power1.out',
+    })
+
+    fillBackground.style.backgroundColor = color;
+
+  } else if (e.type == 'mouseleave') {
+    
+    allLinks.forEach( link => {
+      link.style.color = 'var(--text-dark-color)'; 
+      link.style.opacity = '1';
+    });
+    
+    gsap.to(portfolioImage, {
+      duration: .6,
+      autoAlpha: 0,
+      ease: 'power1.out',
+    })
+
+    fillBackground.style.backgroundColor = '#F17455';
+  }
+}
+
+function progressivelyLoadContent() {
+	let placeholder = document.querySelector('.load-progressively');
+	if (placeholder) {
+		placeholder.classList.remove('load-progressively');
+		var image = new Image();
+		image.src = placeholder.dataset.img;
+		image.onload = () => progressivelyLoadContent();
+	}
+}
 
 function init(){
   const mediaQuery = window.matchMedia('(min-width: 1100px)');
@@ -178,11 +235,14 @@ function init(){
   initNavigation();
   initHideOnScroll();
   initColumnAnimation();
+  initPortfolio();
+
+  progressivelyLoadContent();
+
   if(mediaQuery.matches) {
     initHeaderTilt();
   }
 }
-
 window.addEventListener('load', function(){
     init();
 });
