@@ -706,4 +706,18 @@ section {
 
 @media only screen and (min-width: 1140px) {
 
+  /* .reveal-gallery {
+    flex-direction: row; 
+    height: 100vh;
+  }
+  .rg__column {
+    min-height: auto;
+  }
+  .rg__text--copy {
+    position: absolute;
+    overflow: hidden;
+  }
+  .rg__text {
+    max-width: 17vw;
+  } */
 }
