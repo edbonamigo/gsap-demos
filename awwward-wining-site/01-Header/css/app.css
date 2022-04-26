@@ -5,25 +5,25 @@
   --burger-width: 40px;
   --font-headings: Georgia, serif;
 
-  --bcg-green: #ACB7AE;
-  --bcg-lightgreen: #a6b3b3;
-  --bcg-lightbrown: #b0a7a4;
-  --bcg-lightblue: #a3abb1;
+  --bg-green: #acb7ae;
+  --bg-lightgreen: #a6b3b3;
+  --bg-lightbrown: #b0a7a4;
+  --bg-lightblue: #a3abb1;
 
-  --bcg-loaderblue: #758A94;
-  --bcg-loaderbluedark: #566C76;
+  --bg-loaderblue: #758a94;
+  --bg-loaderbluedark: #566c76;
 
   --loader-width: 27.36vw;
   --loader-height: 50vh;
 
   --v-spacing: 10vh;
-  --h-gutter: 6.6vw;  
+  --h-gutter: 6.6vw;
 
   --easing: cubic-bezier(0.5, 0.7, 0.4, 1);
 }
 
 body {
-  font: 16px/1.7 'Source Sans Pro', Helvetica, Helvetica Neue, Arial, sans-serif;
+  font: 16px/1.7 "Source Sans Pro", Helvetica, Helvetica Neue, Arial, sans-serif;
   color: var(--text-dark-color);
 }
 
@@ -40,7 +40,7 @@ body {
 .logo__img {
   width: 55px;
   height: 55px;
-  background: url('../img/img_logo.svg') no-repeat center;
+  background: url("../img/img_logo.svg") no-repeat center;
   background-size: 55px 55px;
   display: block;
   position: absolute;
@@ -118,7 +118,7 @@ body {
 }
 .main-nav a:after {
   display: block;
-  content: '';
+  content: "";
   height: 2px;
   background-color: var(--text-color);
   position: absolute;
@@ -137,7 +137,7 @@ body {
 
 /* Reveal logo and move buger when the user scrolls */
 .has-scrolled .burger {
-  transform: translateX(100%)
+  transform: translateX(100%);
 }
 .has-scrolled .logo__img {
   opacity: 1;
@@ -145,7 +145,6 @@ body {
 .has-scrolled .logo__text {
   opacity: 0;
 }
-
 
 /* =Header */
 header {
@@ -199,22 +198,26 @@ header h1 span {
   top: auto;
   bottom: -3.8vw;
   left: 58%;
-  background: url('../img/img_logo.svg') no-repeat center;
+  background: url("../img/img_logo.svg") no-repeat center;
   background-size: 50% 50%;
 }
 .cta__circle--logo {
   width: 7.7vw;
   height: 7.7vw;
-  background: url('../img/img_scroll-badge.svg') no-repeat center;
+  background: url("../img/img_scroll-badge.svg") no-repeat center;
   background-size: 100% 100%;
-  animation: rotation 45s linear infinite; 
+  animation: rotation 45s linear infinite;
   position: absolute;
   top: 0;
   left: 0;
 }
 @keyframes rotation {
-  0%   {  transform:  rotate(0deg); }
-  100% {  transform:  rotate(360deg) ; }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* =Header Gallery (random image proportion) 
@@ -255,7 +258,7 @@ header h1 span {
   position: absolute;
   object-fit: cover;
   object-position: 50% 50%;
-  opacity: 0.8
+  opacity: 0.8;
 }
 .hg__left .hg__image:nth-child(1) {
   top: 17vh;
@@ -303,14 +306,10 @@ header h1 span {
  ========================================================================== */
 
 @media only screen and (min-width: 480px) {
-
 }
 
 @media only screen and (min-width: 768px) {
-
-
 }
 
 @media only screen and (min-width: 1140px) {
-
 }

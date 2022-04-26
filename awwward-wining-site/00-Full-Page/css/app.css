@@ -1,43 +1,47 @@
-@font-face{
-  font-family: 'WorkSans-Regular';
+@font-face {
+  font-family: "WorkSans-Regular";
   src: url(../font/WorkSans-Regular.ttf);
 }
 
-@font-face{
-  font-family: 'Gilroy heavy';
+@font-face {
+  font-family: "Gilroy heavy";
   src: url(../font/gilroy-heavy.woff2);
 }
 
 /* https://coolors.co/202020-f2fdff-8b9474-f17455-ffe74c */
 
 :root {
-  --text-color: #F2FDFF;
+  --text-color: #f2fdff;
   --text-dark-color: #151712;
   --header-height: 100px;
   --burger-width: 40px;
-  --font-headings: 'WorkSans-Regular', sans-serif;
-  --font-heavy: 'Gilroy heavy', serif;
+  --font-headings: "WorkSans-Regular", sans-serif;
+  --font-heavy: "Gilroy heavy", serif;
 
-  --bcg-green: #ACB7AE;
-  --bcg-lightgreen: #a6b3b3;
-  --bcg-lightbrown: #b0a7a4;
-  --bcg-lightblue: #a3abb1;
+  /* --bg-default: #f17455; */
+  --bg-default: #151712;
+  --bg-green: #acb7ae;
+  --bg-lightgreen: #a6b3b3;
+  --bg-lightbrown: #b0a7a4;
+  --bg-lightblue: #a3abb1;
 
-  --bcg-loaderblue: #758A94;
-  --bcg-loaderbluedark: #566C76;
+  --bg-loaderblue: #758a94;
+  --bg-loaderbluedark: #566c76;
+  --bg-fill-color: var(--bg-default);
 
   --loader-width: 27.36vw;
   --loader-height: 50vh;
 
   --v-spacing: 10vh;
-  --h-gutter: 6.6vw;  
+  --h-gutter: 6.6vw;
 
   /* --easing: ease; */
   --easing: cubic-bezier(0.5, 0.7, 0.4, 1);
 }
 
 body {
-  font: 16px/1.7 'WorkSans-Regular', Helvetica, Helvetica Neue, Arial, sans-serif;
+  font: 16px/1.7 "WorkSans-Regular", Helvetica, Helvetica Neue, Arial,
+    sans-serif;
   color: var(--text-dark-color);
 }
 
@@ -54,7 +58,7 @@ body {
 .logo__img {
   width: 55px;
   height: 55px;
-  background: url('../img/img_logo.svg') no-repeat center;
+  background: url("../img/img_logo.svg") no-repeat center;
   background-size: 55px 55px;
   display: block;
   position: absolute;
@@ -132,7 +136,7 @@ body {
 }
 .main-nav a:after {
   display: block;
-  content: '';
+  content: "";
   height: 2px;
   background-color: var(--text-color);
   position: absolute;
@@ -151,7 +155,7 @@ body {
 
 /* Reveal logo and move buger when the user scrolls */
 .has-scrolled .burger {
-  transform: translateX(100%)
+  transform: translateX(100%);
 }
 .has-scrolled .logo__img {
   opacity: 1;
@@ -159,7 +163,6 @@ body {
 .has-scrolled .logo__text {
   opacity: 0;
 }
-
 
 /* =Header */
 header {
@@ -172,6 +175,7 @@ header {
   perspective: 2000px;
   perspective-origin: center;
   z-index: 2;
+  margin-bottom: var(--v-spacing);
 }
 header h1 {
   font-family: var(--font-heavy);
@@ -215,22 +219,26 @@ header h1 span {
   top: auto;
   bottom: -3.8vw;
   left: 58%;
-  background: url('../img/img_logo.svg') no-repeat center;
+  background: url("../img/img_logo.svg") no-repeat center;
   background-size: 50% 50%;
 }
 .cta__circle--logo {
   width: 7.7vw;
   height: 7.7vw;
-  background: url('../img/img_scroll-badge.svg') no-repeat center;
+  background: url("../img/img_scroll-badge.svg") no-repeat center;
   background-size: 100% 100%;
-  animation: rotation 45s linear infinite; 
+  animation: rotation 45s linear infinite;
   position: absolute;
   top: 0;
   left: 0;
 }
 @keyframes rotation {
-  0%   {  transform:  rotate(0deg); }
-  100% {  transform:  rotate(360deg) ; }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* =Header Gallery (random image proportion) 
@@ -278,7 +286,7 @@ header h1 span {
   position: absolute;
   object-fit: cover;
   object-position: 50% 50%;
-  opacity: 0.8
+  opacity: 0.8;
 }
 .hg__left .hg__image:nth-child(1) {
   top: 19vh;
@@ -358,11 +366,11 @@ header h1 span {
 .rg__text--copy,
 .stage__text p {
   font-weight: 300;
-  letter-spacing: .03vw;
+  letter-spacing: 0.03vw;
 }
-/* .rg__column.left {background-color:var(--bcg-lightgreen)}
-.rg__column.center {background-color: var(--bcg-lightbrown)}
-.rg__column.right {background-color:var(--bcg-lightblue)} */
+/* .rg__column.left {background-color:var(--bg-lightgreen)}
+.rg__column.center {background-color: var(--bg-lightbrown)}
+.rg__column.right {background-color:var(--bg-lightblue)} */
 /* .rg__column::before {
   display: block;
   position: absolute;
@@ -400,7 +408,8 @@ header h1 span {
 }
 
 /* =Loader */
-.loader, .loader__content {
+.loader,
+.loader__content {
   min-height: 100vh;
   position: fixed;
   flex-direction: column;
@@ -418,7 +427,7 @@ header h1 span {
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: var(--bcg-loaderblue);
+  background-color: var(--bg-loaderblue);
   overflow: hidden;
 }
 .loader .inner,
@@ -427,7 +436,7 @@ header h1 span {
   height: var(--loader-height);
 }
 .loader .inner {
-  background-color: var(--bcg-loaderbluedark);
+  background-color: var(--bg-loaderbluedark);
 }
 .loader__content {
   z-index: 4;
@@ -470,7 +479,6 @@ header h1 span {
   position: absolute;
 }
 
-
 /* =Main */
 main {
   z-index: 1;
@@ -512,13 +520,13 @@ section {
 }
 .portfolio__categories a {
   font-family: var(--font-heavy);
-  color: var(--text-dark-color);
+  color: var(--text-color);
   text-decoration: none;
   font-size: 5.4vw;
   margin: auto;
   letter-spacing: 0.2vw;
   line-height: 1.5;
-  transition: opacity .5s ease-out;
+  transition: opacity 0.5s ease-out;
 }
 .portfolio__categories a:hover {
   z-index: 1;
@@ -550,14 +558,17 @@ section {
   width: 100%;
   height: 100%;
   position: fixed;
+  will-change: background-color;
+  background-color: var(--bg-fill-color);
+  transition: background-color 0.3s linear;
 }
 
 /* =Blog */
 .blog {
   color: var(--text-color);
 }
-.blog  .chapter,
-.contact  .chapter {
+.blog .chapter,
+.contact .chapter {
   top: inherit;
   left: inherit;
   position: relative;
@@ -582,7 +593,9 @@ section {
   position: absolute;
   left: calc(50vw + var(--h-gutter));
   right: calc(var(--h-gutter) * 4);
-  top: calc(50% + (var(--v-spacing) / 2)); /* 50% not 50vh becasue blog is not 100vh */
+  top: calc(
+    50% + (var(--v-spacing) / 2)
+  ); /* 50% not 50vh becasue blog is not 100vh */
   transform: translateY(-50%);
 }
 .blog__text h3 {
@@ -606,21 +619,25 @@ section {
 }
 
 /* =How we work */
-.how-we-work .chapter {
-  top: calc(var(--v-spacing)*2);
+.parallax .chapter {
+  top: calc(var(--v-spacing) * 2);
 }
 .fixed-nav {
   position: absolute;
-  top: calc(var(--v-spacing)*3);
+  top: calc(var(--v-spacing) * 3);
   left: var(--h-gutter);
 }
-.fixed-nav ul {list-style: none; margin: 0; padding: 0}
+.fixed-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 .fixed-nav li {
   overflow: hidden;
 }
 .fixed-nav a {
   color: var(--text-color);
-  text-decoration: none; 
+  text-decoration: none;
   font-family: var(--font-headings);
   position: relative;
   padding-left: 1.8vw;
@@ -631,7 +648,7 @@ section {
 }
 
 .fixed-nav li a::before {
-  content: '';
+  content: "";
   display: block;
   height: 2px;
   width: 1.3vw;
@@ -643,6 +660,10 @@ section {
 .fixed-nav li.is-active a {
   transform: translateX(0);
   opacity: 1;
+}
+
+.stage {
+  margin-bottom: 1rem;
 }
 
 .stage__heading {
@@ -674,7 +695,7 @@ section {
 .stage__image {
   width: calc(50vw + var(--h-gutter));
   margin: 0 var(--h-gutter) 0 33.33vw;
-  padding-bottom: 33.33vw;
+  aspect-ratio: 16/9;
   background-color: #000000;
   overflow: hidden;
   position: relative;
@@ -682,8 +703,8 @@ section {
 }
 .stage__image img {
   opacity: 0.9;
-  height: 120%;
-  top: -20%;
+  height: 125%;
+  top: -25%;
 }
 .stage__text {
   color: var(--text-color);
@@ -696,16 +717,12 @@ section {
  ========================================================================== */
 
 @media only screen and (min-width: 480px) {
-
 }
 
 @media only screen and (min-width: 768px) {
-
-
 }
 
 @media only screen and (min-width: 1140px) {
-
   /* .reveal-gallery {
     flex-direction: row; 
     height: 100vh;

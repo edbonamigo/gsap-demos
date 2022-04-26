@@ -5,25 +5,25 @@
   --burger-width: 40px;
   --font-headings: Georgia, serif;
 
-  --bcg-green: #ACB7AE;
-  --bcg-lightgreen: #a6b3b3;
-  --bcg-lightbrown: #b0a7a4;
-  --bcg-lightblue: #a3abb1;
+  --bg-green: #acb7ae;
+  --bg-lightgreen: #a6b3b3;
+  --bg-lightbrown: #b0a7a4;
+  --bg-lightblue: #a3abb1;
 
-  --bcg-loaderblue: #758A94;
-  --bcg-loaderbluedark: #566C76;
+  --bg-loaderblue: #758a94;
+  --bg-loaderbluedark: #566c76;
 
   --loader-width: 27.36vw;
   --loader-height: 50vh;
 
   --v-spacing: 10vh;
-  --h-gutter: 6.6vw;  
+  --h-gutter: 6.6vw;
 
   --easing: cubic-bezier(0.5, 0.7, 0.4, 1);
 }
 
 body {
-  font: 16px/1.7 'Source Sans Pro', Helvetica, Helvetica Neue, Arial, sans-serif;
+  font: 16px/1.7 "Source Sans Pro", Helvetica, Helvetica Neue, Arial, sans-serif;
   color: var(--text-dark-color);
 }
 
@@ -81,11 +81,11 @@ header h1 span {
   position: absolute;
   object-fit: cover;
   object-position: 50% 50%;
-  opacity: 0.8
+  opacity: 0.8;
 }
 .stage__text p {
   font-weight: 300;
-  letter-spacing: .03vw;
+  letter-spacing: 0.03vw;
 }
 
 /* =Main */
@@ -116,13 +116,12 @@ section {
   opacity: 0.4;
 }
 
-
 /* =Blog */
 .blog {
   color: var(--text-color);
 }
-.blog  .chapter,
-.contact  .chapter {
+.blog .chapter,
+.contact .chapter {
   top: inherit;
   left: inherit;
   position: relative;
@@ -147,7 +146,9 @@ section {
   position: absolute;
   left: calc(50vw + var(--h-gutter));
   right: calc(var(--h-gutter) * 4);
-  top: calc(50% + (var(--v-spacing) / 2)); /* 50% not 50vh becasue blog is not 100vh */
+  top: calc(
+    50% + (var(--v-spacing) / 2)
+  ); /* 50% not 50vh becasue blog is not 100vh */
   transform: translateY(-50%);
 }
 .blog__text h3 {
@@ -172,20 +173,24 @@ section {
 
 /* =How we work */
 .how-we-work .chapter {
-  top: calc(var(--v-spacing)*2);
+  top: calc(var(--v-spacing) * 2);
 }
 .fixed-nav {
   position: absolute;
-  top: calc(var(--v-spacing)*3);
+  top: calc(var(--v-spacing) * 3);
   left: var(--h-gutter);
 }
-.fixed-nav ul {list-style: none; margin: 0; padding: 0}
+.fixed-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 .fixed-nav li {
   overflow: hidden;
 }
 .fixed-nav a {
   color: var(--text-color);
-  text-decoration: none; 
+  text-decoration: none;
   font-family: var(--font-headings);
   position: relative;
   padding-left: 1.8vw;
@@ -196,7 +201,7 @@ section {
 }
 
 .fixed-nav li a::before {
-  content: '';
+  content: "";
   display: block;
   height: 2px;
   width: 1.3vw;
@@ -263,14 +268,10 @@ section {
  ========================================================================== */
 
 @media only screen and (min-width: 480px) {
-
 }
 
 @media only screen and (min-width: 768px) {
-
-
 }
 
 @media only screen and (min-width: 1140px) {
-
 }
