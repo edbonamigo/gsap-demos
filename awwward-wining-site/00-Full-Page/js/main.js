@@ -1,5 +1,183 @@
 gsap.registerPlugin(ScrollTrigger);
 
+// helpers
+const select = (element) => document.querySelector(element);
+const selectAll = (element) => document.querySelectorAll(element);
+
+let bodyScrollBar;
+const loader = select(".loader");
+const loaderInner = select(".loader .inner");
+const progressBar = select(".loader .progress");
+
+function initLoading() {
+  progressivelyLoadContent();
+
+  // twen for the loader progress bar
+  const progressTween = gsap.to(progressBar, {
+    paused: true,
+    scaleX: 0,
+    ease: "none",
+    transformOrigin: "right",
+  });
+
+  // setup variables
+  let loadedImageCount = 0;
+  let imageCount;
+  const container = select("#main");
+
+  // setup Images loaded
+  const imgLoad = imagesLoaded(container);
+  imageCount = imgLoad.images.length;
+
+  // set the initial progress to 0
+  updateProgress(0);
+
+  // triggered after each item is loaded
+  imgLoad.on("progress", function () {
+    // increase the number of loaded images
+    loadedImageCount++;
+    // update progress
+    updateProgress(loadedImageCount);
+  });
+
+  // update the progress of our progressBar tween
+  function updateProgress(value) {
+    // console.log(value/imageCount)
+    // tween progress bar tween to the right value
+    gsap.to(progressTween, {
+      progress: value / imageCount,
+      duration: 0.3,
+      ease: "power1.out",
+    });
+  }
+
+  // do whatever you want when all images are loaded
+  imgLoad.on("done", function (instance) {
+    // we will simply init our loader animation onComplete
+    gsap.set(progressBar, {
+      autoAlpha: 0,
+      onComplete: initBasedOnPageSize,
+    });
+  });
+}
+
+initLoading();
+window.addEventListener("resize", initBasedOnPageSize);
+
+function initBasedOnPageSize() {
+  // independent of page size
+  initIntro();
+  initSmoothScrollbar();
+  initNavigation();
+  initHideMenuOnScroll();
+  initImageParallax();
+  initPinNavParallax();
+  initLinkScrollTo();
+
+  if (window.matchMedia("(min-width: 1024px)").matches) {
+    // console.log("Desktop");
+
+    initHeaderTilt();
+    initColumnAnimation();
+    initHover();
+  } else {
+    alert("Sorry, mobile still in development.");
+
+    columns.forEach((column) => {
+      column.removeEventListener("mouseenter", setActionColumnAnimation);
+      column.removeEventListener("mouseleave", setActionColumnAnimation);
+
+      const { imgBlock, imgMask, textBlock, text, textMask } = column;
+      resetCssProps([imgBlock, imgMask, textBlock, text, textMask]);
+    });
+  }
+}
+
+function initIntro() {
+  const tlLoaderIn = gsap.timeline({
+    defaults: {
+      duration: 1.1,
+      ease: "power2.out",
+    },
+    onComplete: () => select("body").classList.remove("is-loading"),
+  });
+
+  const image = select(".loader__image img");
+  const mask = select(".loader__image--mask");
+  const line1 = select(".loader__title--mask:nth-child(1) span");
+  const line2 = select(".loader__title--mask:nth-child(2) span");
+  const lines = selectAll(".loader__title--mask");
+
+  const loaderContent = select(".loader__content");
+
+  tlLoaderIn
+    .set(loaderContent, { autoAlpha: 1 })
+    .to(loaderInner, {
+      scaleY: 1,
+      transformOrigin: "bottom",
+      ease: "power1.inOut",
+    })
+    .addLabel("revealImage")
+    .from(mask, { yPercent: 100 }, "revealImage-=0.6")
+    .from(image, { yPercent: -80 }, "revealImage-=0.6")
+    .from(
+      [line1, line2],
+      { yPercent: 100, stagger: "0.1" },
+      "revealImage-=0.4"
+    );
+
+  const tlLoaderOut = gsap.timeline({
+    defaults: {
+      duration: 1.2,
+      ease: "power2.inOut",
+    },
+    delay: 0.4,
+  });
+
+  tlLoaderOut
+    .to(lines, { yPercent: -400, stagger: 0.1 }, 0)
+    .to([loader, loaderContent], { yPercent: -100 }, 0.2)
+    .from("#main", { y: 150 }, 0.2);
+
+  const tlLoader = gsap.timeline();
+  tlLoader.add(tlLoaderIn).add(tlLoaderOut);
+}
+
+function initSmoothScrollbar() {
+  bodyScrollBar = Scrollbar.init(document.querySelector("#viewport"), {
+    damping: 0.07,
+  });
+
+  bodyScrollBar.track.xAxis.element.remove();
+
+  // Tell ScrollTrigger to use these proxy getter/setter methods for the "body" element:
+  ScrollTrigger.scrollerProxy(document.body, {
+    scrollTop(value) {
+      if (arguments.length) {
+        bodyScrollBar.scrollTop = value; // setter
+      }
+      return bodyScrollBar.scrollTop; // getter
+    },
+  });
+
+  // when the smooth scroller updates, tell ScrollTrigger to update() too:
+  bodyScrollBar.addListener(ScrollTrigger.update);
+}
+
+function initLinkScrollTo() {
+  gsap.utils.toArray(".fixed-nav a").forEach((link) => {
+    const target = link.getAttribute("href");
+
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      bodyScrollBar.scrollIntoView(document.querySelector(target), {
+        damping: 0.07,
+        offsetTop: 100,
+      });
+    });
+  });
+}
+
 function initNavigation() {
   const mainNavLinks = gsap.utils.toArray(".main-nav a");
   const mainNavLinksReversed = gsap.utils.toArray(".main-nav a").reverse();
@@ -16,6 +194,9 @@ function initNavigation() {
     const scrollDown = direction === 1;
     const pointerEvent = scrollDown ? "none" : "auto";
     const links = scrollDown ? mainNavLinks : mainNavLinksReversed;
+    scrollDown
+      ? document.body.classList.add("has-scrolled")
+      : document.body.classList.remove("has-scrolled");
     return gsap.to(links, {
       duration: 0.3,
       stagger: 0.05,
@@ -33,11 +214,6 @@ function initNavigation() {
 
   ScrollTrigger.create({
     start: 100,
-    end: "bottom bottom-=20",
-    toggleClass: {
-      targets: "body",
-      className: "has-scrolled",
-    },
     onEnter: ({ direction }) => navAnimation(direction),
     onLeaveBack: ({ direction }) => navAnimation(direction),
   });
@@ -46,6 +222,7 @@ function initNavigation() {
 function initHeaderTilt() {
   document.querySelector("header").addEventListener("mousemove", moveImages);
 }
+
 function moveImages(e) {
   // Mouse position
   const { offsetX, offsetY, target } = e;
@@ -89,14 +266,14 @@ function moveImages(e) {
     });
   });
   gsap.to(".decor__circle", {
-    duration: 1,
-    x: xPos * 3,
-    y: yPos * 2,
+    duration: 1.2,
+    x: xPos * 6,
+    y: yPos * 5,
     ease: "power1.out",
   });
 }
 
-function initHideOnScroll() {
+function initHideMenuOnScroll() {
   const elements = gsap.utils.toArray(".js-hide-on-scroll");
   // const element = document.querySelector('.js-hide-on-scroll');
 
@@ -170,10 +347,10 @@ const portfolioImage = document.querySelector(".image_inside");
 const fillBackground = document.querySelector(".fill-background");
 const allLinks = document.querySelectorAll(".portfolio__categories a");
 
-function initPortfolio() {
+function initHover() {
   allLinks.forEach((link) => {
-    link.addEventListener("mouseenter", createPortfolioAnimation);
-    link.addEventListener("mouseleave", createPortfolioAnimation);
+    link.addEventListener("mouseenter", createHoverAnimation);
+    link.addEventListener("mouseleave", createHoverAnimation);
   });
   let yPos;
   let portfolioHeight = document.querySelector(
@@ -190,16 +367,9 @@ function initPortfolio() {
     });
 }
 
-function createPortfolioAnimation(e) {
+function createHoverAnimation(e) {
   let { color, img } = e.target.dataset;
   if (e.type == "mouseenter") {
-    allLinks.forEach((link) => {
-      link.style.color = "#FFF";
-      link !== e.target
-        ? (link.style.opacity = "0.3")
-        : (link.style.opacity = "1");
-    });
-
     portfolioImage.style.backgroundImage = `url(${img})`;
 
     gsap.to(portfolioImage, {
@@ -211,18 +381,13 @@ function createPortfolioAnimation(e) {
 
     fillBackground.style.backgroundColor = color;
   } else if (e.type == "mouseleave") {
-    allLinks.forEach((link) => {
-      link.style.color = "var(--text-dark-color)";
-      link.style.opacity = "1";
-    });
-
     gsap.to(portfolioImage, {
       duration: 0.6,
       autoAlpha: 0,
       ease: "power1.out",
     });
 
-    fillBackground.style.backgroundColor = "#F17455";
+    fillBackground.style.backgroundColor = "var(--bg-default)";
   }
 }
 
@@ -234,7 +399,7 @@ function initImageParallax() {
     const image = section.querySelector("img");
     gsap.to(image, {
       yPercent: 23,
-      ease: "Poweer2.easeOut",
+      ease: "Poweer2.easeIn",
       scrollTrigger: {
         trigger: imageWrapper,
         start: "top bottom",
@@ -248,9 +413,10 @@ function initPinNavParallax() {
   ScrollTrigger.create({
     trigger: ".fixed-nav",
     start: "top 40%",
-    endTrigger: "#stage3",
+    endTrigger: "#stage4",
     end: "center center",
     pin: true,
+    pinReparent: true,
   });
 
   // get viewport height
@@ -263,7 +429,7 @@ function initPinNavParallax() {
   };
 
   const updateBodyColor = (color) => {
-    document.documentElement.style.setProperty("--bg-fill-color", color);
+    fillBackground.style.backgroundColor = color;
   };
 
   const stages = gsap.utils.toArray(".stage");
@@ -274,7 +440,7 @@ function initPinNavParallax() {
 
     ScrollTrigger.create({
       trigger: stage,
-      start: "top 40%",
+      start: "top 60%",
       end: () => `+=${stage.clientHeight + getVh() / 10}`,
       toggleClass: {
         targets: navLinks[index],
@@ -282,8 +448,10 @@ function initPinNavParallax() {
       },
       onEnter: () => updateBodyColor(stage.dataset.color),
       onEnterBack: () => updateBodyColor(stage.dataset.color),
-      onLeaveBack: () => (index == 0 ? updateBodyColor("#F17455") : null),
-      onLeave: () => (index == lastStage ? updateBodyColor("#F17455") : null),
+      onLeaveBack: () =>
+        index == 0 ? updateBodyColor("var(--bg-default)") : null,
+      onLeave: () =>
+        index == lastStage ? updateBodyColor("var(--bg-default)") : null,
     });
   });
 }
@@ -294,48 +462,17 @@ function progressivelyLoadContent() {
     placeholder.classList.remove("load-progressively");
     var image = new Image();
     image.src = placeholder.dataset.img;
-    image.onload = () => progressivelyLoadContent();
+    // no need to run onload, because we have a loader that waits content load
+    // image.onload = () => progressivelyLoadContent();
+    progressivelyLoadContent();
   }
 }
-
-const mediaQuery = window.matchMedia("(min-width: 1100px)");
-
-window.addEventListener("load", function () {
-  handleInitsBasedOnPageSize(mediaQuery);
-});
-
-mediaQuery.addListener(handleInitsBasedOnPageSize);
 
 function resetCssProps(elements) {
   gsap.killTweensOf("*");
   if (elements.length) {
     elements.forEach((el) => {
       el && gsap.set(el, { clearProps: "all" });
-    });
-  }
-}
-
-function handleInitsBasedOnPageSize(mediaQuery) {
-  initNavigation();
-  initHideOnScroll();
-  initImageParallax();
-  initPinNavParallax();
-  progressivelyLoadContent();
-
-  if (mediaQuery.matches) {
-    console.log("Desktop");
-    initHeaderTilt();
-    initColumnAnimation();
-    initPortfolio();
-  } else {
-    alert("Sorry, mobile still in development.");
-
-    columns.forEach((column) => {
-      column.removeEventListener("mouseenter", setActionColumnAnimation);
-      column.removeEventListener("mouseleave", setActionColumnAnimation);
-
-      const { imgBlock, imgMask, textBlock, text, textMask } = column;
-      resetCssProps([imgBlock, imgMask, textBlock, text, textMask]);
     });
   }
 }
