@@ -76,7 +76,7 @@ function initContent() {
   initSmoothScrollbar();
   initNavigation();
   initHideNavOnScroll();
-  initMenu();
+  // initMenu();
   initLinkScrollTo();
   initHero();
   initImageParallax();
