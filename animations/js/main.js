@@ -188,13 +188,18 @@ function initNavigation() {
     });
   });
 
+  function toggleLogo(direction) {
+    const scrollDown = direction === 1;
+    scrollDown
+      ? document.body.classList.add("has-scrolled")
+      : document.body.classList.remove("has-scrolled");
+  }
+
   function navAnimation(direction) {
     const scrollDown = direction === 1;
     const pointerEvent = scrollDown ? "none" : "auto";
     const links = scrollDown ? mainNavLinks : mainNavLinksReversed;
-    scrollDown
-      ? document.body.classList.add("has-scrolled")
-      : document.body.classList.remove("has-scrolled");
+
     return gsap.to(links, {
       duration: 0.3,
       stagger: 0.05,
@@ -210,10 +215,27 @@ function initNavigation() {
     });
   }
 
+  let scrollingDown = false;
+  let direction = 0;
+
   ScrollTrigger.create({
     start: 100,
-    onEnter: ({ direction }) => navAnimation(direction),
-    onLeaveBack: ({ direction }) => navAnimation(direction),
+    end: 99999,
+    onUpdate: (self) => {
+      let direction = self.direction;
+      // hide nav when scrolling down
+      if (direction === 1 && !scrollingDown) {
+        navAnimation(direction);
+        scrollingDown = true;
+      }
+      // show nav when scrolling up
+      if (direction === -1 && scrollingDown) {
+        navAnimation(direction);
+        scrollingDown = false;
+      }
+    },
+    onEnter: ({ direction }) => toggleLogo(direction),
+    onLeaveBack: ({ direction }) => toggleLogo(direction),
   });
 }
 
