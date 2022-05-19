@@ -670,11 +670,10 @@ section {
 }
 
 .contact .blog__text h3 {
-  margin-left: 2rem;
+  margin-bottom: 2rem;
 }
 
 .contact .blog__text p {
-  margin-bottom: 2rem;
   font-size: var(--font-xs);
 }
 
