@@ -16,10 +16,12 @@
   --burger-width: 40px;
   --font-headings: "WorkSans-Regular", sans-serif;
   --font-heavy: "Anton", serif;
-  --font-small: 1.3vw;
-  --font-medium: 3.125vw;
-  --font-big: 4vw;
-  --font-bigger: 7vw;
+  --font-xs: 1rem;
+  --font-sm: 1.3vw;
+  --font-md: 3.125vw;
+  --font-lg: 3.6vw;
+  --font-xl: 5.4vw;
+  --font-xxl: 7vw;
 
   /* --bg-default: #f17455; */
   --bg-default: #000505;
@@ -44,8 +46,8 @@
 
 @media only screen and (max-width: 1024px) {
   :root {
-    --font-small: 3vw;
-    --font-bigger: 10vw;
+    --font-sm: 3vw;
+    --font-xxl: 10vw;
 
     --loader-width: 40vw;
     --loader-height: 50vh;
@@ -82,7 +84,7 @@ body {
 .logo__text,
 .logo__img {
   color: var(--text-color);
-  font-size: var(--font-medium);
+  font-size: var(--font-md);
   font-family: var(--font-heavy);
   letter-spacing: 7px;
   padding-left: var(--h-gutter);
@@ -152,6 +154,7 @@ body {
 }
 .main-nav a {
   color: var(--text-color);
+  font-size: var(--font-xs);
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.1vw;
@@ -178,9 +181,6 @@ body {
 }
 
 /* Reveal logo and move buger when the user scrolls */
-.has-scrolled .burger {
-  transform: translateX(5vw);
-}
 .has-scrolled .logo__img {
   opacity: 1;
 }
@@ -205,7 +205,7 @@ header h1 {
   font-family: var(--font-heavy);
   font-weight: normal;
   color: #fff;
-  font-size: var(--font-bigger);
+  font-size: var(--font-xxl);
   line-height: 1.2;
   z-index: 1;
   margin-bottom: 0;
@@ -216,7 +216,7 @@ header h1 span {
 }
 .subtitle {
   z-index: 1;
-  font-size: var(--font-small);
+  font-size: var(--font-sm);
   color: var(--text-color);
   letter-spacing: 0.3vw;
   font-weight: 300;
@@ -372,7 +372,7 @@ header h1 span {
   overflow: hidden;
 }
 .rg__text--heading h3 {
-  font-size: 3.6vw;
+  font-size: var(--font-lg);
   line-height: 1.192307692;
 }
 .rg__text--heading span {
@@ -392,6 +392,7 @@ header h1 span {
 .stage__text p {
   font-weight: 300;
   letter-spacing: 0.03vw;
+  font-size: var(--font-xs);
 }
 /* .rg__column.left {background-color:var(--bg-lightgreen)}
 .rg__column.center {background-color: var(--bg-lightbrown)}
@@ -487,7 +488,7 @@ header h1 span {
   visibility: hidden;
 }
 .loader__title {
-  font-size: var(--font-bigger);
+  font-size: var(--font-xxl);
   line-height: 1.2;
   margin: 0;
   font-family: var(--font-headings);
@@ -640,7 +641,7 @@ section {
 }
 .blog__text h3 {
   font-family: var(--font-heavy);
-  font-size: 3.6vw;
+  font-size: var(--font-lg);
   line-height: 1.192307692;
   font-weight: normal;
   letter-spacing: 0.2vw;
@@ -664,8 +665,13 @@ section {
   text-decoration: unset;
 }
 
+.contact .blog__text h3 {
+  margin-left: 2rem;
+}
+
 .contact .blog__text p {
   margin-bottom: 2rem;
+  font-size: var(--font-xs);
 }
 
 .is-flipped .blog__image {
@@ -697,6 +703,7 @@ section {
   color: var(--text-color);
   text-decoration: none;
   font-family: var(--font-headings);
+  font-size: var(--font-xs);
   position: relative;
   padding-left: 1.8vw;
   transform: translateX(-1.8vw);
@@ -739,7 +746,7 @@ section {
   position: absolute;
   left: 25vw;
   top: calc(var(--v-spacing) * -1.25);
-  font-size: 3.6vw;
+  font-size: var(--font-lg);
   font-weight: normal;
   margin: 0;
   white-space: nowrap;
