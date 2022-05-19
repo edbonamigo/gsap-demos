@@ -75,10 +75,9 @@ function initContent() {
   initIntro();
   initSmoothScrollbar();
   initNavigation();
-  initHideNavOnScroll();
-  // initMenu();
   initLinkScrollTo();
   initHero();
+  initHideHeroOnScroll();
   initImageParallax();
   initPinNavParallax();
   initColumnAnimation();
@@ -88,7 +87,8 @@ function initContent() {
 function initIntro() {
   const tlLoaderIn = gsap.timeline({
     defaults: {
-      duration: 1.1,
+      // duration: 1.1,
+      duration: 0.1,
       ease: "power2.out",
     },
     onComplete: () => select("body").classList.remove("is-loading"),
@@ -120,7 +120,8 @@ function initIntro() {
 
   const tlLoaderOut = gsap.timeline({
     defaults: {
-      duration: 1.2,
+      // duration: 1.2,
+      duration: 0.2,
       ease: "power2.inOut",
     },
     delay: 0.4,
@@ -216,7 +217,11 @@ function initNavigation() {
   });
 }
 
-function initHideNavOnScroll() {
+function initHero() {
+  select("header").addEventListener("mousemove", moveHeroImages);
+}
+
+function initHideHeroOnScroll() {
   const elements = gsap.utils.toArray(".js-hide-on-scroll");
   // const element = document.querySelector('.js-hide-on-scroll');
 
@@ -235,10 +240,6 @@ function initHideNavOnScroll() {
       },
     });
   });
-}
-
-function initHero() {
-  select("header").addEventListener("mousemove", moveHeroImages);
 }
 
 function moveHeroImages(e) {
@@ -266,7 +267,7 @@ function moveHeroImages(e) {
 
   leftImages.forEach((image, index) => {
     gsap.to(image, {
-      duration: 1,
+      duration: 1.2,
       x: xPos * modifierTopToLeft(index),
       y: yPos * modifierTopToLeft(index),
       rotationY: xPos * 2,
@@ -275,7 +276,7 @@ function moveHeroImages(e) {
   });
   rightImages.forEach((image, index) => {
     gsap.to(image, {
-      duration: 1,
+      duration: 1.2,
       x: xPos * modifierBottomToCenter(index),
       y: -yPos * modifierBottomToCenter(index),
       rotationY: xPos * 2,
@@ -283,7 +284,7 @@ function moveHeroImages(e) {
     });
   });
   gsap.to(".decor__circle", {
-    duration: 1.3,
+    duration: 1.5,
     x: xPos * 4,
     y: yPos * 2,
     ease: "power1.out",
