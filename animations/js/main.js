@@ -216,13 +216,13 @@ function initNavigation() {
   }
 
   let scrollingDown = false;
-  let direction = 0;
+  let direction;
 
   ScrollTrigger.create({
     start: 100,
     end: 99999,
     onUpdate: (self) => {
-      let direction = self.direction;
+      direction = self.direction;
       // hide nav when scrolling down
       if (direction === 1 && !scrollingDown) {
         navAnimation(direction);
