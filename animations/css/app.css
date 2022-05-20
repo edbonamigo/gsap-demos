@@ -882,6 +882,9 @@ section {
   .portfolio__categories a {
     font-size: var(--size-xxl);
   }
+  .portfolio__categories a:hover {
+    -webkit-text-stroke: 1px var(--text-color);
+  }
   .portfolio__image {
     padding-bottom: 75vw;
     width: 70vw;
