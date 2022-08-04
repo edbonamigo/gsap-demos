@@ -243,31 +243,11 @@ function initHero() {
   select("header").addEventListener("mousemove", moveHeroImages);
 }
 
-function initHideHeroOnScroll() {
-  const elements = gsap.utils.toArray(".js-hide-on-scroll");
-  // const element = document.querySelector('.js-hide-on-scroll');
-
-  elements.forEach((element) => {
-    gsap.to(element, {
-      skewY: "5deg",
-      translateY: "-40px",
-      autoAlpha: 0,
-      ease: "power1.out",
-      scrollTrigger: {
-        trigger: element,
-        start: "top top+=100",
-        end: "bottom top+=100",
-        scrub: true,
-        // markers: true
-      },
-    });
-  });
-}
-
-function moveHeroImages(e) {
+const moveHeroImages = (e) => {
   // Mouse position
   const { offsetX, offsetY, target } = e;
   const { clientWidth, clientHeight } = target;
+
   // Size to translate images
   const xPos = (offsetX / clientWidth - 0.5) * 16;
   const yPos = (offsetY / clientHeight - 0.5) * 20;
@@ -296,6 +276,7 @@ function moveHeroImages(e) {
       rotationX: yPos * -1.5,
     });
   });
+
   rightImages.forEach((image, index) => {
     gsap.to(image, {
       duration: 1.2,
@@ -305,19 +286,41 @@ function moveHeroImages(e) {
       rotationX: yPos * -1.5,
     });
   });
+
   gsap.to(".decor__circle", {
     duration: 1.5,
     x: xPos * 4,
     y: yPos * 2,
     ease: "power1.out",
   });
+};
+
+function initHideHeroOnScroll() {
+  const elements = gsap.utils.toArray(".js-hide-on-scroll");
+  // const element = document.querySelector('.js-hide-on-scroll');
+
+  elements.forEach((element) => {
+    gsap.to(element, {
+      skewY: "5deg",
+      translateY: "-40px",
+      autoAlpha: 0,
+      ease: "power1.out",
+      scrollTrigger: {
+        trigger: element,
+        start: "top top+=100",
+        end: "bottom top+=100",
+        scrub: true,
+        // markers: true
+      },
+    });
+  });
 }
 
 function initColumnAnimation() {
   const columns = document.querySelectorAll(".rg__column");
   columns.forEach((column) => {
-    (column.imgBlock = column.querySelector(".rg__image")),
-      (column.imgMask = column.querySelector(".rg__image--mask"));
+    column.imgBlock = column.querySelector(".rg__image");
+    column.imgMask = column.querySelector(".rg__image--mask");
     column.textBlock = column.querySelector(".rg__text");
     column.textMask = column.querySelector(".rg__text--mask");
     column.text = column.querySelector(".rg__text--copy");

@@ -74,7 +74,7 @@ body {
   overflow-y: hidden !important;
 }
 
-/* GSAP Smooth Scrolling */
+/* Smooth Scrolling */
 #viewport {
   overflow: hidden;
   position: fixed;
@@ -514,10 +514,7 @@ header h1 span {
 .rg__image img {
   opacity: 0.6;
 }
-.rg__column.is-active .rg__image,
-.rg__column.is-active .rg__image--mask {
-  /* transform: translateY(0); */
-}
+
 .rg__text--copy {
   position: absolute;
   overflow: hidden;
